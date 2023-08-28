@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const data = req.body;
-  console.log(data);
+
   let user = await UserModel.findById(data.ownerID);
 
   let mce = user.multipleChoiceExams.find((mce) => {
@@ -14,13 +14,23 @@ router.post("/", async (req, res) => {
   }).mcqSubmissions;
 
   let mceAnswer = mce.find((submission) => {
-    return data.submitterID === submission.submitterID;
+    return data.submitterInfo.id === submission.submitterInfo.id;
   });
 
   if (mceAnswer) {
   } else {
-    console.log(data);
-    mce.push({ ...data });
+    let marks = 0;
+
+    data.mcqArray.map((mcqQuestionObject) => {
+      if (
+        mcqQuestionObject.selectedAnswerId === mcqQuestionObject.correctAnswerId
+      ) {
+        marks += 1;
+      }
+    });
+    console.log({ ...data, marks: marks });
+
+    mce.push({ ...data, marks: marks });
   }
 
   user.save();

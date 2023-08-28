@@ -6,9 +6,24 @@ const McqSubmissionSchema = mongoose.Schema({
     type: Array,
     required: true,
   },
-  submitterID: {
-    type: String,
+  marks: {
+    type: Number,
     required: true,
   },
+  submitterInfo: {
+    id: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+  },
 });
+
 module.exports = McqSubmissionSchema;
