@@ -28,13 +28,13 @@ router.post("/", async (req, res) => {
         marks += 1;
       }
     });
-    console.log({ ...data, marks: marks });
+
+    res.json({ marks });
 
     mce.push({ ...data, marks: marks });
   }
 
   user.save();
-  res.json(user);
 });
 
 // router.put()
